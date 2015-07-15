@@ -1,0 +1,59 @@
+package com.laboon;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class WorldTest {
+
+	//when size is negative, NegativeArraySizeException should be thrown
+	@Test
+	public void testNegative() {
+	    try {
+	        World w = new World(-1,3,8);
+	        fail("should have thrown NegativeArraySizeException");
+	    }
+	    catch (NegativeArraySizeException e) {}
+	}
+
+
+	//when size is 0, there is no cell
+	@Test
+	public void testSize0() {
+		World world = new World(0,3,8);
+		String result = world.toString();
+		assertEquals(result,"  "+"\n");
+	}
+	
+	//when size is 1, there is only one cell and it is dead
+	@Test
+	public void testSize1() {
+		World world = new World(1,10,10);
+		String result = world.toString();
+		assertEquals(result,"  0"+"\n"+"0 ."+"\n");
+		
+	}
+
+	//when size is 2, there are four cells 
+		@Test
+		public void testSize2() {
+			World world = new World(2,4,0);
+			String result = world.toString();
+			String expected = "  "+"0"+"1"+"\n"
+			                  +"0"+" "+"."+"."+"\n"
+					          +"1"+" "+"."+"."+"\n";
+			assertEquals(result,expected);	
+		}
+		
+		//when size is so big and out of memory error is thrown
+		@Test
+		public void testHuge() {
+		    try {
+		        World w = new World(1000000000,20,20);
+		        fail("should have thrown OutOfMemoryError");
+		    }
+		    catch (OutOfMemoryError e) {}
+		}
+}
+
+
